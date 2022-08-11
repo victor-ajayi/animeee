@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+animeee – Favourites
+{% endblock %}
+
+{% block main %}
+
+<div class="searched-group d-flex flex-column">
+    <h2 class="favourites">Favourites</h2>
+    {% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+    <div class="alert alert-warning w-75 text-center">{{ message }}</div>
+    {% endfor %}
+    {% endwith %}
+
+    {% for favourite in favouriteList %}
+    <div class="watched-item">
+        <span style="font-size: large">{{ favourite.title }}</span>
+        <form action="/delete">
+            <input name="delete" value="favourites" type="hidden">
+            <input name="title" value="{{ favourite.title }}" type="hidden">
+            <button type="submit" class="btn-delete" style="display: inline">Delete</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

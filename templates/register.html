@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+animeee – Register
+{% endblock %}
+
+{% block main %}
+<form action="/register" method="post" class="form d-flex flex-column">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-warning w-auto">
+                {% for message in messages %}
+                    <p class="p-0">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <p style="font-size: 25px; font-weight: 400;">Enter details</p>
+    <div class="login-details">
+        <div id="username-group">
+            <input type="username" name="username" autofocus placeholder="username" id="username">
+            <div class="text-line"></div>
+        </div>
+        <div id="password-group">
+            <input type="password" name="password" placeholder="password" id="password">
+            <div class="text-line"></div>
+        </div>
+        <div id="confirm-password-group">
+            <input type="password" name="confirm-password" placeholder="Confirm password" id="password">
+            <div class="text-line"></div>
+        </div>
+        <button type="submit" id="submit">Enter</button>
+    </div>
+</form>
+{% endblock %}

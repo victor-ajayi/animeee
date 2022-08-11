@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+animeee – Login
+{% endblock %}
+
+{% block main %}
+
+<div class="form">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-warning w-auto">
+        {% for message in messages %}
+        {{ message }} <br> <a href="/register">Register here</a>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <p style="font-size: 25px; font-weight: 400;">Enter details</p>
+    <form action="/login" method="post" class="login-details">
+        <div id="username-group">
+            <input type="username" name="username" autofocus placeholder="username" id="username">
+            <div class="text-line"></div>
+        </div>
+        <div id="password-group">
+            <input type="password" name="password" placeholder="password" id="password">
+            <div class="text-line"></div>
+        </div>
+        <button type="submit" id="submit">Enter</button>
+    </form>
+    {% if not messages %}
+    <form action="/register" class="register-group d-grid">
+        <p>Don't have an account?</p>
+        <button type="submit" id="register">Register</button>
+    </form>
+    {% endif %}
+    {% endwith %}
+</div>
+{% endblock %}

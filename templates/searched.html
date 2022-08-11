@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+<div class="searched-group d-flex flex-column">
+    {% for result in results %}
+    <div class="searched-item d-flex">
+        <div class="searched-item-left">
+            <img class="anime-img" src="{{ result.image_url }}" alt="Cover image for {{ result.title }}">
+            <div style="" class="score-episodes">
+                <p class="d-inline">{{ result.score }} </p>
+                <p class="d-inline">{{ result.episodes }} EP</p>
+            </div>
+        </div>
+        <div class="searched-item-right d-flex flex-column">
+            <div class="about-group">
+                <h4 class="anime-title">{{ result.title }}</h4>
+                <p>{{ result.synopsis }}</p>
+            </div>
+            <div class="add-buttons">
+                <form action="/add_watched" method="post">
+                    <input name="title" value="{{ result.title }}" type="hidden">
+                    <button class="add-watched" type="submit">Add to
+                        Watched</button>
+                </form>
+                <form action="/add_watching" method="post">
+                    <input name="title" value="{{ result.title }}" type="hidden">
+                    <button class="add-watching" type="submit">Add to
+                        Watching</button>
+                </form>
+                <form action="/add_favourite" method="post">
+                    <input name="title" value="{{ result.title }}" type="hidden">
+                    <button class="add-favourite" type="submit">Add to
+                        Favourites</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+animeee – Watched
+{% endblock %}
+
+{% block main %}
+
+<div class="searched-group d-flex flex-column">
+    <h2 class="watched">Watched</h2>
+    {% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+    <div class="alert alert-warning w-75 text-center">{{ message }}</div>
+    {% endfor %}
+    {% endwith %}
+
+    {% for watched in watchedList %}
+    <div class="watched-item">
+        <span style="font-size: large">{{ watched.title }}</span>
+        <form action="/delete">
+            <input name="delete" value="watched" type="hidden">
+            <input name="title" value="{{ watched.title }}" type="hidden">
+            <button type="submit" class="btn-delete" style="display: inline">Delete</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

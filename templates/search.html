@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+animeee – Search
+{% endblock %}
+
+{% block main %}
+  <div class="search-group">
+    <h3 class="add">Add new anime</h3>
+
+    <form class="search-form" action="/search" method="post">
+      <input autofocus class="name" name="name" placeholder="Enter anime" type="text">
+      <button class="submit" type="submit">Search</button>
+    </form>
+  </div>
+{% endblock %}
+
