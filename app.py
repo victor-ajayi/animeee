@@ -114,7 +114,7 @@ def login():
         print(len(rows))
 
         # Check if username exists
-        if username != rows[0]["username"]:
+        if not rows or username != rows[0]["username"]:
             flash("Username doesn't exists.")
             return render_template("login.html")
 
