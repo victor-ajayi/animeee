@@ -21,14 +21,12 @@ This directory contains all the template HTML for creating pages dynamically.
 `static/ folder`
 This contains a single `styles.css` file which has all the CSS styling rules for all the HTML file and is linked in the `layout.html`
 
-### Improvements
-
-One bad thing that stands out to me about this project is that is has absolutely no JavaScript. I had to seperate every function into routes in the Flask app. So to improve the usability of the app, implementing some and/or more features with JavaScript to declutter `app.py` would be great. Also, design wise, there's a lot that could be done. It has a fairly simple minimalistic design, which I like, but it definitely could use some design improvements.
-
-The search route also needs improvements, right now it redirects immediately after adding an anime to a list. A much better implementation would be having it remain on the route so that multiple anime can be added at once.
-
-I also have an idea of adding a comment section to the watched anime. Since the user has finished watching the anime, having the option to comment on it and talk about the experience would be nice. Having a shared list with other users is also something that could be added. Anime brings people together and sharing a watchlist would be great.
+### How to Run
+To run this application, make sure you have [Flask](https://pypi.org/project/Flask/) installed and use the simple command in the terminal and it should open an instance in your default browser
+```
+flask run
+```
 
 ### Contribution
 
-If you would like to contribute, a good place to start would be ideas in the *Improvements* section above. Clone the repository and open a pull request.
+I've curated a list of issues in the Issues tab for contribution. Clone the repository and open a pull request.
