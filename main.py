@@ -2,7 +2,7 @@ import os
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
-from flask-session import Session
+from flask.ext.session import Session
 from helpers import login_required, lookup
 from werkzeug.security import check_password_hash, generate_password_hash
 
