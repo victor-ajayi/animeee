@@ -7,13 +7,13 @@ animeee is a personal online anime journal for anime enthusiasts to help keep tr
 To add anime to any of the watchlists, the user has to query the API in the `Search`. A request is made to Jikan with the search query and it returns about 50 results with titles that contain the exact or a related query. On adding to a watchlist, the title of the anime and the ID of the current logged in user is stored in the database.
 
 ### How to Run
-To run this application, install the necessary packages with 
+Install the necessary packages with 
 ```
 pip install -r requirements.txt
 ```
 and you should be able to run the application with
 ```
-flask run
+flask --app main run
 ```
 
 ### Contribution
