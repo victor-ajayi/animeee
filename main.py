@@ -32,8 +32,9 @@ def invalid_route(e):
 def add_favourite():
 
     title = request.form.get("title")
-    db.execute("INSERT INTO favourites (id, title) VALUES (?, ?)",
-               session["user_id"], title)
+    db.execute(
+        "INSERT INTO favourites (id, title) VALUES (?, ?)", session["user_id"], title
+    )
 
     return redirect("/favourites")
 
@@ -43,8 +44,9 @@ def add_favourite():
 def add_watched():
 
     title = request.form.get("title")
-    db.execute("INSERT INTO watched (id, title) VALUES (?, ?)",
-               session["user_id"], title)
+    db.execute(
+        "INSERT INTO watched (id, title) VALUES (?, ?)", session["user_id"], title
+    )
 
     return redirect("/watched")
 
@@ -54,8 +56,9 @@ def add_watched():
 def add_watching():
 
     title = request.form.get("title")
-    db.execute("INSERT INTO watching (id, title) VALUES (?, ?)",
-               session["user_id"], title)
+    db.execute(
+        "INSERT INTO watching (id, title) VALUES (?, ?)", session["user_id"], title
+    )
 
     return redirect("/watching")
 
@@ -65,18 +68,27 @@ def add_watching():
 def delete():
 
     if request.args.get("delete") == "watched":
-        db.execute("DELETE FROM watched WHERE id = ? AND title = ?",
-                   session["user_id"], request.args.get("title"))
+        db.execute(
+            "DELETE FROM watched WHERE id = ? AND title = ?",
+            session["user_id"],
+            request.args.get("title"),
+        )
         return redirect("/watched")
 
     elif request.args.get("delete") == "favourites":
-        db.execute("DELETE FROM favourites WHERE id = ? AND title = ?",
-                   session["user_id"], request.args.get("title"))
+        db.execute(
+            "DELETE FROM favourites WHERE id = ? AND title = ?",
+            session["user_id"],
+            request.args.get("title"),
+        )
         return redirect("/favourites")
 
     else:
-        db.execute("DELETE FROM watching WHERE id = ? AND title = ?",
-                   session["user_id"], request.args.get("title"))
+        db.execute(
+            "DELETE FROM watching WHERE id = ? AND title = ?",
+            session["user_id"],
+            request.args.get("title"),
+        )
         return redirect("/watching")
 
 
@@ -167,8 +179,11 @@ def register():
         # Enter user
         username = request.form.get("username")
         if not db.execute("SELECT * FROM users WHERE username = ?", username):
-            db.execute("INSERT INTO users (username, hash) VALUES (?, ?)",
-                       username, generate_password_hash(request.form.get("password")))
+            db.execute(
+                "INSERT INTO users (username, hash) VALUES (?, ?)",
+                username,
+                generate_password_hash(request.form.get("password")),
+            )
 
         else:
             flash("Username already exists")
@@ -202,8 +217,7 @@ def search():
 @login_required
 def watched():
 
-    watchedList = db.execute(
-        "SELECT * FROM watched WHERE id = ?", session["user_id"])
+    watchedList = db.execute("SELECT * FROM watched WHERE id = ?", session["user_id"])
 
     if not watchedList:
         flash("Your list is empty")
@@ -215,8 +229,7 @@ def watched():
 @login_required
 def watching():
 
-    watchingList = db.execute(
-        "SELECT * FROM watching WHERE id = ?", session["user_id"])
+    watchingList = db.execute("SELECT * FROM watching WHERE id = ?", session["user_id"])
 
     if not watchingList:
         flash("Your list is empty")
@@ -229,12 +242,14 @@ def watching():
 def favourites():
 
     favouriteList = db.execute(
-        "SELECT * FROM favourites WHERE id = ?", session["user_id"])
+        "SELECT * FROM favourites WHERE id = ?", session["user_id"]
+    )
 
     if not favouriteList:
         flash("Your list is empty")
 
     return render_template("favourites.html", favouriteList=favouriteList)
+
 
 # if __name__ == "__main__":
 #     app.run(Debug=True)
