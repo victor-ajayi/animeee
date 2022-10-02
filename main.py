@@ -251,5 +251,5 @@ def favourites():
     return render_template("favourites.html", favouriteList=favouriteList)
 
 
-# if __name__ == "__main__":
-#     app.run(Debug=True)
+if __name__ == '__main__':
+    app.run(debug=True, port=os.getenv("PORT", default=5000))
