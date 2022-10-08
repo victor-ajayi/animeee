@@ -128,9 +128,9 @@ img {
     border-radius: 1rem;
 }
 
-.anime-title {
-    /* margin-top: 1rem; */
-    /* inline-size: 10rem; */
+.anime-desc {
+    opacity: 65%;
+    line-height: 1.2em;
 }
 
 .anime-img {
@@ -152,12 +152,11 @@ img {
 }
 
 .about-group {
-    /* margin-block: 20px; */
+    margin-bottom: 1em;
 }
 
-.searched-item-right {
+.searched-item-body {
     justify-content: space-between;
-    padding-bottom: 2rem;
 }
 
 .add-buttons {
