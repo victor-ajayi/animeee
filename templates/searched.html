@@ -1,20 +1,21 @@
-{% extends 'layout.html' %}
+{% extends 'base.html' %}
 
 {% block main %}
 <div class="searched-group d-flex flex-column">
     {% for result in results %}
     <div class="searched-item d-flex">
-        <div class="searched-item-left">
-            <img class="anime-img" src="{{ result.image_url }}" alt="Cover image for {{ result.title }}">
-            <div style="" class="score-episodes">
+        <div class="searched-item-image">
+            <img class="anime-img" src="{{ result.image.extraLarge }}" alt="Cover image for {{ result.title }}">
+            <div class="score-episodes">
                 <p class="d-inline">{{ result.score }} </p>
                 <p class="d-inline">{{ result.episodes }} EP</p>
             </div>
         </div>
-        <div class="searched-item-right d-flex flex-column">
+        <div class="searched-item-body d-flex flex-column">
             <div class="about-group">
-                <h4 class="anime-title">{{ result.title }}</h4>
-                <p>{{ result.synopsis }}</p>
+                <h4 class="anime-title">{{ result.title.english if result.title.english is defined else
+                    result.title.romaji}}</h4>
+                <p class="anime-desc">{{ result.desc }}</p>
             </div>
             <div class="add-buttons">
                 <form action="/add_watched" method="post">
