@@ -13,8 +13,8 @@
         </div>
         <div class="searched-item-body d-flex flex-column">
             <div class="about-group">
-                <h4 class="anime-title">{{ result.title.english if result.title.english is defined else
-                    result.title.romaji}}</h4>
+                <h4 class="anime-title">{{ result.title.english if result.title.english is not none else result.title.romaji }}</h4>
+                <p class="anime-year">{{ result.year }}</p>
                 <p class="anime-desc">{{ result.desc }}</p>
             </div>
             <div class="add-buttons">
