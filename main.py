@@ -210,7 +210,8 @@ def search():
         title = request.form.get("name")
         results = lookup(title)
 
-        return render_template("searched.html", results=results)
+        # return render_template("searched.html", results=results)
+        return results
 
 
 @app.route("/watched")

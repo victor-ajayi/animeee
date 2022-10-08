@@ -21,27 +21,32 @@ def lookup(anime):
 
     # Contact API
     try:
-        url = "https://jikan1.p.rapidapi.com/search/anime"
+        # Here we define our query as a multi-line string
+        query = '''
+            query ($id: Int) { # Define which variables will be used in the query (id)
+                Media (id: $id, type: ANIME) { 
+                    # Insert our variables into the query arguments (id) (type: ANIME is hard-coded in the query)
+                    id
+                    title {
+                    romaji
+                    english
+                    native
+                    }
+                }
+            }
+        '''
 
-        querystring = {"q": anime}
-        headers = {
-            "X-RapidAPI-Key": "35ed5fd643msh2f7a35cb1726a4ep17f19djsn4d0c6f6291bb",
-            "X-RapidAPI-Host": "jikan1.p.rapidapi.com"
+        # Define our query variables and values that will be used in the query request
+        variables = {
+            "search": anime         
         }
-        response = requests.request("GET", url, headers=headers, params=querystring)
+
+        url = 'https://graphql.anilist.co'
+
+        # Make the HTTP Api request
+        response = requests.post(url, json={'query': query, 'variables': variables})
     except requests.RequestException:
         return None
 
-    # Parse response
-    try:
-        response = response.json()
-        response = response["results"]
-        responseList = []
-        for result in response:
-            responseList.append(result)
-        return responseList
-    except (TypeError, ValueError):
-        return None
-
-
-
+    response.json()
+    return response
