@@ -129,10 +129,20 @@ img {
 }
 
 .anime-desc {
-    opacity: 65%;
+    opacity: 70%;
     line-height: 1.2em;
+    white-space: pre-line;
 }
 
+.anime-title {
+    margin-bottom: 0em;
+}
+
+.anime-year {
+    opacity: 50%;
+    font-size: small;
+    margin-bottom: 1em;
+}
 .anime-img {
     margin-bottom: 10px;
 }
