@@ -128,11 +128,21 @@ img {
     border-radius: 1rem;
 }
 
-.anime-title {
-    /* margin-top: 1rem; */
-    /* inline-size: 10rem; */
+.anime-desc {
+    opacity: 70%;
+    line-height: 1.2em;
+    white-space: pre-line;
 }
 
+.anime-title {
+    margin-bottom: 0em;
+}
+
+.anime-year {
+    opacity: 50%;
+    font-size: small;
+    margin-bottom: 1em;
+}
 .anime-img {
     margin-bottom: 10px;
 }
@@ -152,12 +162,11 @@ img {
 }
 
 .about-group {
-    /* margin-block: 20px; */
+    margin-bottom: 1em;
 }
 
-.searched-item-right {
+.searched-item-body {
     justify-content: space-between;
-    padding-bottom: 2rem;
 }
 
 .add-buttons {

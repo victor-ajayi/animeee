@@ -1,3 +1,4 @@
+import json
 from functools import wraps
 
 import requests
@@ -17,31 +18,54 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 def lookup(anime):
 
     # Contact API
     try:
-        url = "https://jikan1.p.rapidapi.com/search/anime"
+        query = """
+            query ($id: Int, $page: Int, $search: String) {
+                Page (page: $page) {
+                    media (id: $id, search: $search, type: ANIME) {
+                        id
+                        title {
+                            english
+                            romaji
+                        }
+                        desc: description
+                        image: coverImage {
+                            extraLarge
+                        }
+                        episodes
+                        score: averageScore
+                        year: seasonYear
+                    }
+                }
+            }
+        """
 
-        querystring = {"q": anime}
-        headers = {
-            "X-RapidAPI-Key": "35ed5fd643msh2f7a35cb1726a4ep17f19djsn4d0c6f6291bb",
-            "X-RapidAPI-Host": "jikan1.p.rapidapi.com"
+        variables = {
+            "search": anime         
         }
-        response = requests.request("GET", url, headers=headers, params=querystring)
+
+        url = "https://graphql.anilist.co"
+
+        response = requests.post(url, json={'query': query, 'variables': variables})
     except requests.RequestException:
         return None
 
-    # Parse response
-    try:
-        response = response.json()
-        response = response["results"]
-        responseList = []
-        for result in response:
-            responseList.append(result)
-        return responseList
-    except (TypeError, ValueError):
-        return None
+    response = response.json()
+    response = response["data"]["Page"]["media"]
 
+    for r in response:
+        if None in r.values():
+            response.remove(r)
 
+        # Shorten description
+        else:
+            r["desc"] = r["desc"].replace("<br>", "\n")
+            r["desc"] = r["desc"].replace("\n\n", "\n")
+            if len(r["desc"]) > 250:
+                r["desc"] = r["desc"][:250] + "..."
 
+    return response
