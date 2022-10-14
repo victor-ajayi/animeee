@@ -18,11 +18,11 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 def lookup(anime):
 
     # Contact API
     try:
-        # Here we define our query as a multi-line string
         query = """
             query ($id: Int, $page: Int, $search: String) {
                 Page (page: $page) {
@@ -38,24 +38,34 @@ def lookup(anime):
                         }
                         episodes
                         score: averageScore
+                        year: seasonYear
                     }
                 }
             }
         """
 
-        # Define our query variables and values that will be used in the query request
         variables = {
             "search": anime         
         }
 
         url = "https://graphql.anilist.co"
 
-        # Make the HTTP Api request
         response = requests.post(url, json={'query': query, 'variables': variables})
     except requests.RequestException:
         return None
 
     response = response.json()
     response = response["data"]["Page"]["media"]
-    
+
+    for r in response:
+        if None in r.values():
+            response.remove(r)
+
+        # Shorten description
+        else:
+            r["desc"] = r["desc"].replace("<br>", "\n")
+            r["desc"] = r["desc"].replace("\n\n", "\n")
+            if len(r["desc"]) > 250:
+                r["desc"] = r["desc"][:250] + "..."
+
     return response

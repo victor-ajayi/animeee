@@ -21,7 +21,7 @@ Session(app)
 # Configure database with CS50
 db = SQL("sqlite:///data.db")
 
-# Create database
+# Create database and tables
 db.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, hash TEXT NOT NULL)")
 db.execute("CREATE TABLE IF NOT EXISTS watched (id, title)")
 db.execute("CREATE TABLE IF NOT EXISTS watching (id, title)")
@@ -260,3 +260,4 @@ def favourites():
 
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
+    
