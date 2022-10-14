@@ -13,23 +13,24 @@
         </div>
         <div class="searched-item-body d-flex flex-column">
             <div class="about-group">
-                <h4 class="anime-title">{{ result.title.english if result.title.english is not none else result.title.romaji }}</h4>
+                {% set title = result.title.english if result.title.english is not none else result.title.romaji %}
+                <h4 class="anime-title">{{ title }}</h4>
                 <p class="anime-year">{{ result.year }}</p>
                 <p class="anime-desc">{{ result.desc }}</p>
             </div>
             <div class="add-buttons">
                 <form action="/add_watched" method="post">
-                    <input name="title" value="{{ result.title }}" type="hidden">
+                    <input name="title" value="{{ title }}" type="hidden">
                     <button class="add-watched" type="submit">Add to
                         Watched</button>
                 </form>
                 <form action="/add_watching" method="post">
-                    <input name="title" value="{{ result.title }}" type="hidden">
+                    <input name="title" value="{{ title }}" type="hidden">
                     <button class="add-watching" type="submit">Add to
                         Watching</button>
                 </form>
                 <form action="/add_favourite" method="post">
-                    <input name="title" value="{{ result.title }}" type="hidden">
+                    <input name="title" value="{{ title }}" type="hidden">
                     <button class="add-favourite" type="submit">Add to
                         Favourites</button>
                 </form>
