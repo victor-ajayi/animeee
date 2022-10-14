@@ -23,9 +23,9 @@ db = SQL("sqlite:///data.db")
 
 # Create database and tables
 db.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, hash TEXT NOT NULL)")
-db.execute("CREATE TABLE IF NOT EXISTS watched (id, title)")
-db.execute("CREATE TABLE IF NOT EXISTS watching (id, title)")
-db.execute("CREATE TABLE IF NOT EXISTS favourites (id, title)")
+db.execute("CREATE TABLE IF NOT EXISTS watched (user_id, anime_id, title)")
+db.execute("CREATE TABLE IF NOT EXISTS watching (user_id, anime_id, title)")
+db.execute("CREATE TABLE IF NOT EXISTS favourites (user_id, anime_id, title)")
 
 
 @app.errorhandler(404)
@@ -38,9 +38,13 @@ def invalid_route(e):
 def add_favourite():
 
     title = request.form.get("title")
-    db.execute(
-        "INSERT INTO favourites (id, title) VALUES (?, ?)", session["user_id"], title
-    )
+    id = request.form.get("id")
+    rows = db.execute("SELECT * FROM favourites WHERE anime_id = ?", id)
+
+    if not rows:
+        db.execute(
+            "INSERT INTO favourites (user_id, anime_id, title) VALUES (?, ?, ?)", session["user_id"], id, title
+        )
 
     return redirect("/favourites")
 
@@ -50,9 +54,13 @@ def add_favourite():
 def add_watched():
 
     title = request.form.get("title")
-    db.execute(
-        "INSERT INTO watched (id, title) VALUES (?, ?)", session["user_id"], title
-    )
+    id = request.form.get("id")
+    rows = db.execute("SELECT * FROM watched WHERE anime_id = ?", id)
+
+    if not rows:
+        db.execute(
+            "INSERT INTO watched (user_id, anime_id, title) VALUES (?, ?, ?)", session["user_id"], id, title
+        )
 
     return redirect("/watched")
 
@@ -62,9 +70,13 @@ def add_watched():
 def add_watching():
 
     title = request.form.get("title")
-    db.execute(
-        "INSERT INTO watching (id, title) VALUES (?, ?)", session["user_id"], title
-    )
+    id = request.form.get("id")
+    rows = db.execute("SELECT * FROM watching WHERE anime_id = ?", id)
+
+    if not rows:
+        db.execute(
+            """INSERT INTO watching (user_id, anime_id, title) VALUES (?, ?, ?)""", session["user_id"], id, title
+        )
 
     return redirect("/watching")
 
@@ -75,7 +87,7 @@ def delete():
 
     if request.args.get("delete") == "watched":
         db.execute(
-            "DELETE FROM watched WHERE id = ? AND title = ?",
+            "DELETE FROM watched WHERE user_id = ? AND title = ?",
             session["user_id"],
             request.args.get("title"),
         )
@@ -83,7 +95,7 @@ def delete():
 
     elif request.args.get("delete") == "favourites":
         db.execute(
-            "DELETE FROM favourites WHERE id = ? AND title = ?",
+            "DELETE FROM favourites WHERE user_id = ? AND title = ?",
             session["user_id"],
             request.args.get("title"),
         )
@@ -91,7 +103,7 @@ def delete():
 
     else:
         db.execute(
-            "DELETE FROM watching WHERE id = ? AND title = ?",
+            "DELETE FROM watching WHERE user_id = ? AND title = ?",
             session["user_id"],
             request.args.get("title"),
         )
@@ -224,7 +236,7 @@ def search():
 @login_required
 def watched():
 
-    watchedList = db.execute("SELECT * FROM watched WHERE id = ?", session["user_id"])
+    watchedList = db.execute("SELECT * FROM watched WHERE user_id = ?", session["user_id"])
 
     if not watchedList:
         flash("Your list is empty")
@@ -236,7 +248,7 @@ def watched():
 @login_required
 def watching():
 
-    watchingList = db.execute("SELECT * FROM watching WHERE id = ?", session["user_id"])
+    watchingList = db.execute("SELECT * FROM watching WHERE user_id = ?", session["user_id"])
 
     if not watchingList:
         flash("Your list is empty")
@@ -249,7 +261,7 @@ def watching():
 def favourites():
 
     favouriteList = db.execute(
-        "SELECT * FROM favourites WHERE id = ?", session["user_id"]
+        "SELECT * FROM favourites WHERE user_id = ?", session["user_id"]
     )
 
     if not favouriteList:

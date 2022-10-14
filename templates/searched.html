@@ -21,16 +21,19 @@
             <div class="add-buttons">
                 <form action="/add_watched" method="post">
                     <input name="title" value="{{ title }}" type="hidden">
+                    <input name="id" value="{{ result.id }}" type="hidden">
                     <button class="add-watched" type="submit">Add to
                         Watched</button>
                 </form>
                 <form action="/add_watching" method="post">
                     <input name="title" value="{{ title }}" type="hidden">
+                    <input name="id" value="{{ result.id }}" type="hidden">
                     <button class="add-watching" type="submit">Add to
                         Watching</button>
                 </form>
                 <form action="/add_favourite" method="post">
                     <input name="title" value="{{ title }}" type="hidden">
+                    <input name="id" value="{{ result.id }}" type="hidden">
                     <button class="add-favourite" type="submit">Add to
                         Favourites</button>
                 </form>
